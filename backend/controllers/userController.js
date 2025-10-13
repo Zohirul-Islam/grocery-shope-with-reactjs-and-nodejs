@@ -32,7 +32,7 @@ export const login = async(req,res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.json({success:false,message:"username or password required !"})
+            return res.json({success:false,message:"The field is required !"})
         }
         const user = await User.findOne({ email });
         if (!user) {
@@ -62,7 +62,6 @@ export const isAuth = async(req,res) => {
         try {
             const { userId } = req.body;
             const user = await User.findById(userId).select("-password");
-            console.log(user);
             return res.json({success:true,user})
         } catch (error) {
         console.log(error.message);

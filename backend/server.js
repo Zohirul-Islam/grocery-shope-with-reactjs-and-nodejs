@@ -4,6 +4,7 @@ import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './configs/db.js';
 import userRouter from './routes/userRoute.js';
+import sellerRouter from './routes/sellerRoute.js';
 
 
 const app = express();
@@ -13,7 +14,8 @@ await connectDB()
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({}))
-app.use('/api/user',userRouter)
+app.use('/api/user', userRouter);
+app.use('/api/seller',sellerRouter)
 app.get('/', (req,res) => {
     res.send("api is working") 
 })
