@@ -6,6 +6,7 @@ import connectDB from './configs/db.js';
 import userRouter from './routes/userRoute.js';
 import sellerRouter from './routes/sellerRoute.js';
 import connectCloudinary from './configs/cloudinary.js';
+import productRouter from './routes/productRoute.js';
 
 
 const app = express();
@@ -17,7 +18,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({}))
 app.use('/api/user', userRouter);
-app.use('/api/seller',sellerRouter)
+app.use('/api/seller', sellerRouter);
+app.use('/api/product', productRouter);
 app.get('/', (req,res) => {
     res.send("api is working") 
 })
