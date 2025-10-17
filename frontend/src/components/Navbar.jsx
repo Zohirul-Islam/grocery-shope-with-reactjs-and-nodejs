@@ -62,7 +62,7 @@ const Navbar = () => {
         aria-label="Menu"
         className="sm:hidden"
       >
-        {/* Menu Icon SVG */}
+        {/* Menu Icon */}
         <img src={assets.menu_icon} alt="menu-icon" />
       </button>
 
