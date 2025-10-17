@@ -2,11 +2,20 @@ import { Route, Routes, useLocation } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import { Toaster } from "react-hot-toast";
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from "react";
 
 const App = () => {
   const isSellerPath = useLocation().pathname.includes('seller');
-  console.log(isSellerPath);
+  const location = useLocation();
+  /* effect for aos animation */
+  useEffect(() => {
+    AOS.init({ duration: 800, once: false });
+  }, []);
+  useEffect(() => {
+  AOS.refresh();
+}, [location.pathname]);
   return (
     <div>
       {isSellerPath ? null :<Navbar />}
