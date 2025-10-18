@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from "react";
+import Footer from "./components/Footer";
 
 const App = () => {
   const isSellerPath = useLocation().pathname.includes('seller');
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/" element={<Home/>} />
         </Routes>
       </div>
+      {!isSellerPath && <Footer/>}
     </div>
   )
 }
