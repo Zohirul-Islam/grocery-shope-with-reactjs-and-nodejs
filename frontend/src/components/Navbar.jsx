@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { user, setUser, navigate, setShowUserLogin } = useAppContext();
+  const { user, setUser, navigate, setShowUserLogin,   searchQuary,
+    setSearchQuary } = useAppContext();
   const logout = async () => {
     setUser(null);
     navigate("/");
   };
+  useEffect(() => {
+    if (searchQuary.length > 0) {
+      navigate('/products')
+    }
+  },[searchQuary])
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
       <NavLink to={"/"} onClick={()=>setOpen(false)}>
@@ -26,6 +32,7 @@ const Navbar = () => {
           <input
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
+            onChange={(e)=>setSearchQuary(e.target.value)}
             placeholder="Search products"
           />
           <img src={assets.search_icon} className="w-4 h-4" alt="search" />
