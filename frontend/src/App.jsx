@@ -6,8 +6,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from "react";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import { useAppContext } from "./context/AppContext";
 
 const App = () => {
+  const { showUserLogin } = useAppContext();
   const isSellerPath = useLocation().pathname.includes('seller');
   const location = useLocation();
   /* effect for aos animation */
@@ -19,7 +22,8 @@ const App = () => {
 }, [location.pathname]);
   return (
     <div>
-      {isSellerPath ? null :<Navbar />}
+      {isSellerPath ? null : <Navbar />}
+      {showUserLogin ? <Login/>:null}
       <Toaster/>
       <div className={`${isSellerPath ? '':'px-6 md:px-16 lg:px-24 xl:px-32'}`}>
         <Routes>
