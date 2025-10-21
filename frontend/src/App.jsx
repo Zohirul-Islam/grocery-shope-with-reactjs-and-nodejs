@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import { useAppContext } from "./context/AppContext";
 import Allproducts from "./pages/Allproducts";
 import ProductCategory from "./pages/ProductCategory";
+import ProductDetails from "./pages/ProductDetails";
 
 const App = () => {
   const { showUserLogin } = useAppContext();
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/" element={<Home/>} />
           <Route path="/products" element={<Allproducts/>} />
           <Route path="/products/:category" element={<ProductCategory/>} />
+          <Route path="/products/:category/:id" element={<ProductDetails/>} />
         </Routes>
       </div>
       {!isSellerPath && <Footer/>}
