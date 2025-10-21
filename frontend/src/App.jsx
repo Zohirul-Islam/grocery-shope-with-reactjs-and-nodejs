@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import { useAppContext } from "./context/AppContext";
 import Allproducts from "./pages/Allproducts";
+import ProductCategory from "./pages/ProductCategory";
 
 const App = () => {
   const { showUserLogin } = useAppContext();
@@ -30,6 +31,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/products" element={<Allproducts/>} />
+          <Route path="/products/:category" element={<ProductCategory/>} />
         </Routes>
       </div>
       {!isSellerPath && <Footer/>}
