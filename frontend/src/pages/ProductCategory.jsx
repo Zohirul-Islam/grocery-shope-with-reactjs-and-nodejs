@@ -9,7 +9,8 @@ const ProductCategory = () => {
   const { category } = useParams();
   const searchCategory = categories.find(
     (item) => item.path.toLowerCase() === category
-  );
+    );
+    
   const filteredProducts = products.filter(
     (product) => product.category.toLowerCase() === category
   );
@@ -31,7 +32,7 @@ const ProductCategory = () => {
         </div>
       ) : (
         <div className="flex items-center justify-center h-[60vh]">
-          <p>No products found in this category</p>
+          <p className="text-2xl font-medium text-primary">No products found in this category</p>
         </div>
       )}
     </div>
