@@ -83,7 +83,7 @@ const AppContextProvider = ({ children }) => {
     products,
     currency,
     updateCartItem,
-      addToCart,
+    addToCart,
     removeFromCart,
     searchQuary,
     setSearchQuary,
