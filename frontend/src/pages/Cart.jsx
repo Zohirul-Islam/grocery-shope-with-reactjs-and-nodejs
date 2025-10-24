@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { dummyAddress } from "../assets/assets";
 
@@ -11,18 +11,34 @@ const Cart = () => {
     addToCart,
     removeFromCart,
     cartItems,
-    getCartCount,
+      getCartCount,
+    navigate,
     getCartTotalAmount,
     } = useAppContext();
     const [cartArray, setCartArray] = useState([]);
     const [addresses, setSetAddresses] = useState(dummyAddress);
     const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
     const [paymentOption, setPaymentOption] = useState('COD');
-  return (
-    <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
+    const getCart = () => {
+        let tempArray = [];
+        for (const key in cartItems){
+            const product = products.find((item) => item._id === key);
+            console.log(product);
+            product.quantity = cartItems[key];
+            tempArray.push(product)
+        }
+        setCartArray(tempArray);
+    }
+    useEffect(() => {
+        if (products.length > 0 && cartItems) {
+            getCart()
+       }
+    },[products,cartItems])
+  return products.length > 0 && cartItems ? (
+    <div className="flex flex-col md:flex-row mt-16">
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
-          Shopping Cart <span className="text-sm text-indigo-500">3 Items</span>
+                  Shopping Cart <span className="text-sm text-indigo-500">{ getCartCount()}</span>
         </h1>
 
         <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -31,16 +47,18 @@ const Cart = () => {
           <p className="text-center">Action</p>
         </div>
 
-        {products.map((product, index) => (
+        {cartArray.map((product, index) => (
           <div
             key={index}
             className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-3"
           >
             <div className="flex items-center md:gap-6 gap-3">
-              <div className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
+                    <div onClick={() => {
+                        navigate(`/products/${product.category.toLowerCase()}/${product._id}`);scrollTo(0,0)
+              }} className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
                 <img
                   className="max-w-full h-full object-cover"
-                  src={product.image}
+                  src={product.image[0]}
                   alt={product.name}
                 />
               </div>
@@ -48,7 +66,7 @@ const Cart = () => {
                 <p className="hidden md:block font-semibold">{product.name}</p>
                 <div className="font-normal text-gray-500/70">
                   <p>
-                    Size: <span>{product.size || "N/A"}</span>
+                    Weight: <span>{product.weight || "N/A"}</span>
                   </p>
                   <div className="flex items-center">
                     <p>Qty:</p>
@@ -174,6 +192,6 @@ const Cart = () => {
         </button>
       </div>
     </div>
-  );
+  ):null
 };
 export default Cart;
