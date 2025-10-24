@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { dummyAddress } from "../assets/assets";
+import { assets, dummyAddress } from "../assets/assets";
 
 const Cart = () => {
   const [showAddress, setShowAddress] = useState(false);
@@ -38,7 +38,7 @@ const Cart = () => {
     <div className="flex flex-col md:flex-row mt-16">
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
-                  Shopping Cart <span className="text-sm text-indigo-500">{ getCartCount()}</span>
+                  Shopping Cart <span className="text-3xl text-indigo-500">({ getCartCount()})</span>
         </h1>
 
         <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -71,7 +71,7 @@ const Cart = () => {
                   <div className="flex items-center">
                     <p>Qty:</p>
                     <select className="outline-none">
-                      {Array(5)
+                      {Array(cartItems[product._id] > 9 ? cartItems[product._id]:9)
                         .fill("")
                         .map((_, index) => (
                           <option key={index} value={index + 1}>
@@ -84,44 +84,16 @@ const Cart = () => {
               </div>
             </div>
             <p className="text-center">
-              ${product.offerPrice * product.quantity}
+                    { currency}{product.offerPrice * product.quantity}
             </p>
-            <button className="cursor-pointer mx-auto">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m12.5 7.5-5 5m0-5 5 5m5.833-2.5a8.333 8.333 0 1 1-16.667 0 8.333 8.333 0 0 1 16.667 0"
-                  stroke="#FF532E"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <button onClick={()=>removeFromCart()} className="cursor-pointer mx-auto">
+                <img className="inline-block w-6 h-6" src={assets.refresh_icon} alt="remove" />
             </button>
           </div>
         ))}
 
-        <button className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium">
-          <svg
-            width="15"
-            height="11"
-            viewBox="0 0 15 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.09 5.5H1M6.143 10 1 5.5 6.143 1"
-              stroke="#615fff"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+              <button onClick={() => { navigate('/products'); scrollTo(0,0)}} className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium">
+            <img className="group-hover:-translate-x-1 transition" src={assets.arrow_right_icon_colored} alt="arrow" />
           Continue Shopping
         </button>
       </div>
