@@ -80,7 +80,7 @@ const Cart = () => {
                   </p>
                   <div className="flex items-center">
                     <p>Qty:</p>
-                    <select className="outline-none">
+                    <select className="outline-none" onChange={(e)=>updateCartItem(product._id,Number(e.target.value))} value={cartItems[product._id]}>
                       {Array(
                         cartItems[product._id] > 9 ? cartItems[product._id] : 9
                       )
@@ -100,7 +100,7 @@ const Cart = () => {
               {product.offerPrice * product.quantity}
             </p>
             <button
-              onClick={() => removeFromCart()}
+              onClick={() => removeFromCart(product._id)}
               className="cursor-pointer mx-auto"
             >
               <img
@@ -145,7 +145,8 @@ const Cart = () => {
             {showAddress && (
               <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full">
                 {addresses.map((address,index) => (
-                 <p
+                  <p
+                    key={index}
                   onClick={() => {setSelectedAddress(address),setShowAddress(false)}}
                   className="text-gray-500 p-2 hover:bg-gray-100"
                 >
