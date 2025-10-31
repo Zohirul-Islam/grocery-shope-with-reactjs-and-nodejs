@@ -11,34 +11,35 @@ const Cart = () => {
     addToCart,
     removeFromCart,
     cartItems,
-      getCartCount,
+    getCartCount,
     navigate,
     getCartTotalAmount,
-    } = useAppContext();
-    const [cartArray, setCartArray] = useState([]);
-    const [addresses, setSetAddresses] = useState(dummyAddress);
-    const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
-    const [paymentOption, setPaymentOption] = useState('COD');
-    const getCart = () => {
-        let tempArray = [];
-        for (const key in cartItems){
-            const product = products.find((item) => item._id === key);
-            console.log(product);
-            product.quantity = cartItems[key];
-            tempArray.push(product)
-        }
-        setCartArray(tempArray);
+  } = useAppContext();
+  const [cartArray, setCartArray] = useState([]);
+  const [addresses, setSetAddresses] = useState(dummyAddress);
+  const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
+  const [paymentOption, setPaymentOption] = useState("COD");
+  const getCart = () => {
+    let tempArray = [];
+    for (const key in cartItems) {
+      const product = products.find((item) => item._id === key);
+      console.log(product);
+      product.quantity = cartItems[key];
+      tempArray.push(product);
     }
-    useEffect(() => {
-        if (products.length > 0 && cartItems) {
-            getCart()
-       }
-    },[products,cartItems])
+    setCartArray(tempArray);
+  };
+  useEffect(() => {
+    if (products.length > 0 && cartItems) {
+      getCart();
+    }
+  }, [products, cartItems]);
   return products.length > 0 && cartItems ? (
     <div className="flex flex-col md:flex-row mt-16">
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
-                  Shopping Cart <span className="text-3xl text-indigo-500">({ getCartCount()})</span>
+          Shopping Cart{" "}
+          <span className="text-3xl text-indigo-500">({getCartCount()})</span>
         </h1>
 
         <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -53,9 +54,15 @@ const Cart = () => {
             className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-3"
           >
             <div className="flex items-center md:gap-6 gap-3">
-                    <div onClick={() => {
-                        navigate(`/products/${product.category.toLowerCase()}/${product._id}`);scrollTo(0,0)
-              }} className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
+              <div
+                onClick={() => {
+                  navigate(
+                    `/products/${product.category.toLowerCase()}/${product._id}`
+                  );
+                  scrollTo(0, 0);
+                }}
+                className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden"
+              >
                 <img
                   className="max-w-full h-full object-cover"
                   src={product.image[0]}
@@ -71,7 +78,9 @@ const Cart = () => {
                   <div className="flex items-center">
                     <p>Qty:</p>
                     <select className="outline-none">
-                      {Array(cartItems[product._id] > 9 ? cartItems[product._id]:9)
+                      {Array(
+                        cartItems[product._id] > 9 ? cartItems[product._id] : 9
+                      )
                         .fill("")
                         .map((_, index) => (
                           <option key={index} value={index + 1}>
@@ -84,16 +93,34 @@ const Cart = () => {
               </div>
             </div>
             <p className="text-center">
-                    { currency}{product.offerPrice * product.quantity}
+              {currency}
+              {product.offerPrice * product.quantity}
             </p>
-            <button onClick={()=>removeFromCart()} className="cursor-pointer mx-auto">
-                <img className="inline-block w-6 h-6" src={assets.refresh_icon} alt="remove" />
+            <button
+              onClick={() => removeFromCart()}
+              className="cursor-pointer mx-auto"
+            >
+              <img
+                className="inline-block w-6 h-6"
+                src={assets.refresh_icon}
+                alt="remove"
+              />
             </button>
           </div>
         ))}
 
-              <button onClick={() => { navigate('/products'); scrollTo(0,0)}} className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium">
-            <img className="group-hover:-translate-x-1 transition" src={assets.arrow_right_icon_colored} alt="arrow" />
+        <button
+          onClick={() => {
+            navigate("/products");
+            scrollTo(0, 0);
+          }}
+          className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium"
+        >
+          <img
+            className="group-hover:-translate-x-1 transition"
+            src={assets.arrow_right_icon_colored}
+            alt="arrow"
+          />
           Continue Shopping
         </button>
       </div>
@@ -103,7 +130,7 @@ const Cart = () => {
         <hr className="border-gray-300 my-5" />
 
         <div className="mb-6">
-          <p className="text-sm font-medium uppercase">Delivery Address</p>
+          <p className="text-sm font-medium uppercase">{selectedAddress ? `${selectedAddress.street},${selectedAddress.city},${selectedAddress.state},${selectedAddress.country}`:'No Address Found !' }</p>
           <div className="relative flex justify-between items-start mt-2">
             <p className="text-gray-500">No address found</p>
             <button
@@ -164,6 +191,6 @@ const Cart = () => {
         </button>
       </div>
     </div>
-  ):null
+  ) : null;
 };
 export default Cart;
