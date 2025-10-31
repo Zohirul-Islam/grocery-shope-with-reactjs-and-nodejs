@@ -105,7 +105,7 @@ const Cart = () => {
             >
               <img
                 className="inline-block w-6 h-6"
-                src={assets.refresh_icon}
+                src={assets.remove_icon}
                 alt="remove"
               />
             </button>
