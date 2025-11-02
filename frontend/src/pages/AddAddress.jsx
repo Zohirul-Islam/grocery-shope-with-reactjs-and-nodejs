@@ -4,6 +4,7 @@ const InputField = ({type,placeholder,name,handleChange,address}) => (
     <input className='w-full px-2 py-2.5 border border-gray-500/30 rounded outline-0 text-gray-500 focus:border-primary transition' type={ type} placeholder={placeholder} name={name} onChange ={handleChange} value={address[name]} required />
 )
 const AddAddress = () => {
+    /* .......................................................................................................... */
     const [address, setAddress] = useState({
         firstName: "",
         lastName: "",
@@ -22,6 +23,7 @@ const AddAddress = () => {
     const submitHandler = async(e) => {
         e.preventDefault();
     }
+    /* ........................................................................................................ */
   return (
       <div className='mt-16 pt-16'>
           <p className='text-2xl md:text-3xl text-gray-500'>Add Shipping <span className='font-semibold text-primary'>Address</span></p>
