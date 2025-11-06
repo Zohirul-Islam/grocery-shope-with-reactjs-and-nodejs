@@ -22,13 +22,13 @@ const SellerLogin = () => {
             <p className="text-2xl font-medium m-auto"><span className="text-primary">Seller</span>Login</p>
             <div className="w-full">
                 <p>Email</p>
-                <input required type="email" placeholder="Enter your email" className="border border-gray-200 w-full rounded p-2 mt-1 outline-0" />
+                <input value={email} onChange={(e)=>setEmail(e.target.value)} required type="email" placeholder="Enter your email" className="border border-gray-200 w-full rounded p-2 mt-1 outline-0" />
             </div>
             <div className="w-full">
                 <p>Password</p>
-                <input required type="password" placeholder="Enter your password" className="border border-gray-200 w-full rounded p-2 mt-1 outline-0" />
+                <input value={password} onChange={(e)=>setPassword(e.target.value)} required type="password" placeholder="Enter your password" className="border border-gray-200 w-full rounded p-2 mt-1 outline-0" />
             </div>
-            <button className="bg-primary text-white w-full py-2 rounded-md cursor-pointer">Login</button>
+            <button type="submit" className="bg-primary text-white w-full py-2 rounded-md cursor-pointer">Login</button>
       </div>
   </form>;
 };
