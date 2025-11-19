@@ -21,7 +21,7 @@ export const register = async(req,res) => {
            sameSite: process.env.NODE_ENV === 'production' ? "none" : "strict",// CSRF protection
            maxAge:7*24*60*60*1000 // cookie expiration time
        })
-       return res.json({success:true,user:{name:user.name,email:user.email}})
+       return res.json({success:true,message:"Registration successfull",user:{name:user.name,email:user.email}})
    } catch (error) {
        console.log(error.message);
          res.json({success:false,message:error.message})
@@ -49,7 +49,7 @@ export const login = async(req,res) => {
            sameSite: process.env.NODE_ENV === 'production' ? "none" : "strict",// CSRF protection
            maxAge:7*24*60*60*1000 // cookie expiration time
        })
-       return res.json({success:true,user:{name:user.name,email:user.email}})
+       return res.json({success:true,message:"login successfull",user:{name:user.name,email:user.email}})
 
     } catch (error) {
         console.log(error.message);
@@ -58,16 +58,24 @@ export const login = async(req,res) => {
 }
 // check auth:/api/user/is-auth
 // this is protected route
-export const isAuth = async(req,res) => {
-        try {
-            const { userId } = req.body;
-            const user = await User.findById(userId).select("-password");
-            return res.json({success:true,user})
-        } catch (error) {
+export const isAuth = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        const user = await User.findById(userId).select("-password");
+
+        return res.json({
+            success: true,
+            message: "authenticated user",
+            user
+        });
+
+    } catch (error) {
         console.log(error.message);
-         res.json({success:false,message:error.message})
-        }
-}
+        res.json({ success: false, message: error.message });
+    }
+};
+
 // logout user:/api/user/logout
 export const logout = async (req,res) => {
     try {
