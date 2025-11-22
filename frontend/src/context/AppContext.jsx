@@ -4,7 +4,9 @@ import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyProducts } from "../assets/assets";
 import toast from "react-hot-toast";
-
+import axios from 'axios';
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
@@ -71,6 +73,19 @@ const AppContextProvider = ({ children }) => {
     }
     return Math.floor(totalAmount*100)/100
   }
+  // fetch seller status- login or not
+const fetchSeller = async() => {
+    try {
+      const { data } = await axios.get('/api/seller/is-auth');
+      if (data.success) {
+        setIsSeller(true);
+      } else {
+        setIsSeller(false);
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+}
   const value = {
     navigate,
       user,
@@ -88,9 +103,11 @@ const AppContextProvider = ({ children }) => {
     searchQuary,
     setSearchQuary,
     getCartCount,
-    getCartTotalAmount
+    getCartTotalAmount,
+    axios
   };
   useEffect(() => {
+    fetchSeller();
     fetchProducts();
   }, []);
 
