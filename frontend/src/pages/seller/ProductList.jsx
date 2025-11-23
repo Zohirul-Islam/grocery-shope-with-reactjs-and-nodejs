@@ -8,6 +8,7 @@ const ProductList = () => {
   const toggleStock = async(id,inStock) => {
       try {
         const { data } = await axios.post('/api/product/stock', { id, inStock });
+        console.log(data);
         if (data.success) {
           fetchProducts();
           toast.success(data.message);
@@ -53,7 +54,7 @@ const ProductList = () => {
                   <td className="px-4 py-3">
                     <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
                       <input
-                        onClick={() => toggleStock(product._id, !product.inStock)}
+                        onChange={(e) => toggleStock(product._id, e.target.checked)}
                         checked ={product.inStock}
                         type="checkbox"
                         className="sr-only peer"
