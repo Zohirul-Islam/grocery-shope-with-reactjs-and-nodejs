@@ -20,7 +20,16 @@ const AppContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY;
   /* fetch products */
   const fetchProducts = async () => {
-    setProducts(dummyProducts);
+    try {
+      const { data } = await axios.get('/api/product/list');
+      if (data.success) {
+        setProducts(data.products);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   /* add product to cart */
   const addToCart = (itemId) => {
@@ -104,7 +113,8 @@ const fetchSeller = async() => {
     setSearchQuary,
     getCartCount,
     getCartTotalAmount,
-    axios
+    axios,
+    fetchProducts
   };
   useEffect(() => {
     fetchSeller();
